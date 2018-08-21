@@ -1,17 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <script>
-    /*
+---
+title: 实现功能步骤分析-03
+typora-copy-images-to: media
+---
 
-    一. 问题:comments页面批量删除操作,当批量删除最后一整页的评论之后,
-        由于之前写的批量操作成功之后,刷新当前页面,而最后一页已经删除,刷新当前页就没有数据
+##    一. 问题:comments页面批量删除操作,当批量删除最后一整页的评论之后,
+-        由于之前写的批量操作成功之后,刷新当前页面,而最后一页已经删除,刷新当前页就没有数据
         解决:在批量操作成功之后判断
             (1) 是批量删除操作(即status为trashed)
             (2) 而且是删除一整页的评论(即thead的选框选中就是批量操作全部评论)
@@ -19,8 +12,8 @@
              拿到总页:在loadData前面定义一个全局变量gloabTotalPage,在loadData中接收到响应体之后用该全局变量存储响应体中的totalPage
          符合上面三个条件的(即使批量删除最后一页的全部评论),那么就调用loadData(gloabTotalPage-1))刷新前一页即可
     
-    二. 实现文章页面(posts.html)文章数据显示
-        (1) 一打开页面,在页面的全部样式加载完之后发送请求,参数页码pageIndex和页容量pageSize
+##    二. 实现文章页面(posts.html)文章数据显示
+-       (1) 一打开页面,在页面的全部样式加载完之后发送请求,参数页码pageIndex和页容量pageSize
         (2) 服务器端接收到请求,获取传递过来的pageIndex和pageSize,
            需要返回分页的数据data(需要进行分页查询)和总页数totalPage(查询文章数)
            ① 分页查询,文章数据显示的内容连三张表(categories表,users表,posts表)查询
@@ -29,8 +22,8 @@
            ②文章数查询 总页数=向上取整(文章数/页容量)
         (3) 浏览器端接收到响应体,用响应体.data填充模板
 
-    三. 实现点击页码分页显示文章数据(使用jQuery插件)
-        在loadData中接收响应成功之后,使用分页插件
+##    三. 实现点击页码分页显示文章数据(使用jQuery插件)
+-        在loadData中接收响应成功之后,使用分页插件
         $('#pagination-demo').twbsPagination({
         totalPages: 35,(总页数)
         visiblePages: 7,(显示几个页码)
@@ -43,13 +36,13 @@
         }
     });
 
-    四. 实现分类下拉框category动态生成各分类
-        (1) 一打开页面,当页面的全部样式都显示出来后,发送请求
+##    四. 实现分类下拉框category动态生成各分类
+-       (1) 一打开页面,当页面的全部样式都显示出来后,发送请求
         (2) 服务器接收请求,查询分类表(categories),返回查询到的表的内容
         (3) 浏览器端接收到响应体,for遍历响应体,createElement动态生成option,并将响应体.name赋值给新生成的option
 
-    五.实现筛选显示文章数据
-        与显示文章数据使用同一个请求loadData和接口getPosts.php
+##    五.实现筛选显示文章数据
+-        与显示文章数据使用同一个请求loadData和接口getPosts.php
         由于要根据筛选的条件显示文章数据,就需要拿到筛选的条件(两个select下拉框中被选中的值)
         (1) 拿到两个下拉框被选中的值,
             注意: select有一个特殊的属性value, 
@@ -77,8 +70,8 @@
                   ④ 查询分页的SQL语句最终还要要加上limit---->$sql.='limit....';
                3. 查询全部文章的sql语句也要修改,改为$sql2
     
-    六.解决问题:
-        按理筛选之后的总页数会改变,然而此时,筛选的页面与所有分类并且所有状态下的总页数一样
+##    六.解决问题:
+-        按理筛选之后的总页数会改变,然而此时,筛选的页面与所有分类并且所有状态下的总页数一样
     ----原因: 
           分页插件出于节省效率,只有第一次调用的时候才会初始化,后面几次调用这个代码都不会初始化
     ----解决: 让它每次调用都是第一次
@@ -92,19 +85,10 @@
             所以还要设置默认起始页为当前页
             ② startPage:page,
                   
-
-
-
-
-
-
     注意:
          
        注意:....prop('checked',数据)  填的数据不用加引号
       
           
 
-    */    
-    </script>
-</body>
-</html>
+ 
