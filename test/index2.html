@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <input type="file" id="file">
+    <img src="" alt="" id="icon">
+    <script>
+    // 原来的ajax不支持异步上传文件
+    // 更新的ajax2.0版本支持,只是多了一个FormData对象
+    // 这个对象可以实现异步上传文件
+    document.getElementById('file').onchange=function(){
+        // 创建请求对象
+        var xhr=new XMLHttpRequest();
+        //设置请求行
+        xhr.open('post','file.php');
+        // 使用FormData对象,不用设置请求头,因为它内部帮我们设置了
+         // 创建一个FormData对象
+         var fm=new FormData();
+         //添加一个提交到服务器的参数icon,值为这张图片
+         fm.append('icon',this.files[0]);
+         // 发送请求,用了FormData之后,直接传递对象
+         xhr.send(fm);
+        //  接收响应体
+        xhr.onreadystatechange=function(){
+            if(xhr.readyState==4&&xhr.status==200){
+                // 把传递回来的url给img的src
+                document.getElementById('icon').src=xhr.responseText;
+            }
+        }
+
+        //
+        //
+    }
+    </script>
+</body>
+</html>

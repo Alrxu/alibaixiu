@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 这个div就是用来变成富文本编辑器的 -->
+    <div id="box"></div>
+
+    <input type="button" value="获取html" id="btn1">
+    <input type="button" value="获取text" id="btn2">
+</body>
+
+</html>
+
+<!-- 导入富文本插件 -->
+<script src="../assets/vendors/wangEditor/wangEditor.min.js"></script>
+
+<!-- 写JS代码了 -->
+<script>
+
+    //意思就是：把id为box的盒子，转换为富文本编辑器对象
+    var editor = new wangEditor('#box');
+
+    //调用此方法后，div就变成了富文本的燕子
+    editor.create();
+
+    document.getElementById('btn1').onclick = function () {
+
+        console.log(editor.txt.html());
+
+    }
+
+    document.getElementById('btn2').onclick = function () {
+
+        console.log(editor.txt.text());
+
+    }
+
+</script>

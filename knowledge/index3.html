@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <form id="form" action="data.php" method="POST" enctype="multipart/form-data">
+
+        <input type="text" name="user" placeholder="请输入用户" id="user">
+        <input type="password" name="pass" placeholder="请输入密码" id="pass">
+        
+        <input type="file" name="icon" id="icon">
+
+        <!-- <input type="submit"> -->
+    </form>
+
+
+    <input type="button" id="btn" value="点我">
+    <input type="button" id="btn2" value="表单序列化">
+
+</body>
+</html>
+
+<script src="../assets/vendors/jquery/jquery.min.js"></script>
+
+<script>
+
+    var form = document.getElementById('form');
+
+    document.getElementById('btn').onclick = function(){
+
+        //先要创建请求对象
+        var xhr = new XMLHttpRequest();
+        xhr.open('post','data.php');
+        
+        //如果是以前的写法， 那么表单里有N个，就要写N个参数
+        // var fm = new FormData();
+        // fm.append('name', document.getElementById('user').value );
+        // fm.append('pass', document.getElementById('pass').value );
+        // fm.append('icon', document.getElementById('icon').files[0] );
+
+        //FormData也可以传入一个表单对象，那样的话，它会自动获取到这个表单里带name属性的表单元素
+        //然后当做参数
+        //想到jquery里的表单序列化，表单序列化，无法提交文件，FormData才可以
+        var fm = new FormData(form);
+        
+        // 注意：FormData里只能传js的表单对象，不能传jquery的表单对象
+        // var fm = new FormData($('#form')[0]);
+
+        xhr.send(fm);
+    }
+
+    document.getElementById('btn2').onclick = function(){
+
+        //jquery中的表单序列化是无法获取到上传的文件的
+        var str =  $('#form').serialize();
+        console.log(str);
+
+    }
+</script>

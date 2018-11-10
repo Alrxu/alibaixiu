@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <form action="data.php" id="file" method="post" enctype="multipart/form-data">
+        <input type="text" name="username"><br>
+        <input type="password" name="password"><br>
+        <input type="file" name="icon" id="icon">
+    </form>
+    <button id="btn">点击</button>
+
+    <script>
+    // jQuery的表单序列化serialize能获取到表单中所有有name属性的表单元素的值
+    //但是不能提交文件,
+    //FormData也可以传入一个表单对象,自动获取到表单中所有有name属性的表单元素
+    
+
+    // 点击btn,发送请求
+    var form=document.getElementById('file');
+    document.getElementById('btn').onclick=function(){
+        var xhr=new XMLHttpRequest();
+        xhr.open('post','data.php');
+        var fm=new FormData(form);
+        xhr.send(fm);
+    }
+    </script>
+    
+</body>
+</html>

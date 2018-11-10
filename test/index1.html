@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="main.js"></script>
+</head>
+
+<body>
+
+    <input type="file" id="file">
+    <img src="" alt="" id="icon">
+    <script>
+        /*
+            选择图片后预览:
+            方案1: 简单方案-- 直接把选择的图片转换为临时的url
+            方案2:
+               选择完图片之后,立即异步上传图片,然后服务器返回这个图片的url,然后把url给img的src就能预览了
+
+
+
+        */
+
+        //值改变事件: 对于上传文件而言,就是选择不同的文件后触发事件
+        document.getElementById('file').onchange = function () {
+            // 选中的文件在file元素的files属性里,files是一个数组,里面保存了刚刚选择的所有文件
+            // 因为默认只能选一张,所以直接取下标为0,就是我们选择的图片
+            // console.dir(this);
+            /*
+           files:
+                FileList:0
+                File(25465) {name: "hia.png", lastModified: 1534754452566, lastModifiedDate: Mon Aug 20 2018 16:40:52 GMT+0800 (中国标准时间), webkitRelativePath: "", size: 25465, …}
+                length:1
+                
+           */
+
+           // 把选择的图片换成临时路径url
+           var url=URL.createObjectURL(this.files[0]);
+
+           document.getElementById('icon').src=url;
+
+        }
+    </script>
+</body>
+
+</html>

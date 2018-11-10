@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <input type="file" id="file">
+
+    
+    <!-- 在html里，只有什么元素才能展示图片 -->
+
+    <!-- 要让img能显示图片，就是要让它的src属性，有一个值，这个是url -->
+    <img src="" alt="" id="icon">
+
+
+</body>
+</html>
+
+<!-- 
+    我们如果要做选择图片后立即预览，有两套方案
+
+    1.简单方案，直接把你选择的图片，转换为临时的url
+            关掉网页就没用了，我把这段URL发给你们你们也打不开
+
+    2.选择完图片后，立即异步上传图片，然后服务器返回这个图片的url，再把url给img的src就能预览了
+ -->
+
+ <script>
+     
+     //值改变事件：对于上传文件而言就是选择不同的文件后再出发
+     document.getElementById('file').onchange = function(){
+
+        //你选择的文件在file元素的files属性里，files是一个数组，它里面保存了你刚刚选择的所有文件
+        //因为默认只能选1张，所以files里面，直接取下标0，就是我们要的图片
+        // console.dir(this);
+
+        //要想办法把图片转换为临时的url
+        //把选择的那张图片，转换成一个临时的url
+        var url = URL.createObjectURL(this.files[0]);
+
+        // console.log(url);
+        document.getElementById('icon').src = url;
+     }
+ </script>

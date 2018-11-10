@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<!-- 发送请求,如果没有登录则不能进入index页面 -->
+<script>
+
+    var xhr=new XMLHttpRequest();
+        xhr.open('get','api/checkIsLogin.php',false);
+        xhr.onload=function(){
+          if(xhr.responseText!='ok'){
+            location = "login.html";
+              return;
+          }
+        }
+        xhr.send();
+        
+    </script>
+
+<head>
+    <meta charset="utf-8">
+    <title>Dashboard &laquo; Admin</title>
+    <link rel="stylesheet" href="../assets/vendors/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="../assets/vendors/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="../assets/vendors/nprogress/nprogress.css">
+    <link rel="stylesheet" href="../assets/css/admin.css">
+    <script src="../assets/vendors/nprogress/nprogress.js"></script>
+</head>
+
+<body>
+    <script>NProgress.start()</script>
+
+    <div class="main">
+        <nav class="navbar">
+            <button class="btn btn-default navbar-btn fa fa-bars"></button>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="profile.html"><i class="fa fa-user"></i>个人中心</a></li>
+                <li><a href="./api/doLogOut.php"><i class="fa fa-sign-out"></i>退出</a></li>
+            </ul>
+        </nav>
+        <div class="container-fluid">
+            <div class="page-title">
+                <h1>我的个人资料</h1>
+            </div>
+            <!-- 有错误信息时展示 -->
+            <!-- <div class="alert alert-danger">
+        <strong>错误！</strong>发生XXX错误
+      </div> -->
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">头像</label>
+                    <div class="col-sm-6">
+                        <label class="form-image">
+                            <input id="avatar" type="file" name="avatar">
+                            <img id="icon" src="../assets/img/default.png">
+                            <i class="mask fa fa-upload"></i>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="col-sm-3 control-label">邮箱</label>
+                    <div class="col-sm-6">
+                        <input id="email" class="form-control" name="email" type="type"  placeholder="邮箱"
+                            readonly>
+                        <p class="help-block">登录邮箱不允许修改</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="slug" class="col-sm-3 control-label">别名</label>
+                    <div class="col-sm-6">
+                        <input id="slug" class="form-control" name="slug" type="type" value="zce" placeholder="slug">
+                        <p class="help-block">https://zce.me/author/<strong>zce</strong></p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="nickname" class="col-sm-3 control-label">昵称</label>
+                    <div class="col-sm-6">
+                        <input id="nickname" class="form-control" name="nickname" type="type" value="汪磊" placeholder="昵称">
+                        <p class="help-block">限制在 2-16 个字符</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="bio" class="col-sm-3 control-label">简介</label>
+                    <div class="col-sm-6">
+                        <textarea name="bio" id="bio" class="form-control" placeholder="Bio" cols="30" rows="6">MAKE IT BETTER!</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-6">
+                        <button id="update" type="submit" class="btn btn-primary">更新</button>
+                        <a  id="updatePwd" class="btn btn-link" href="password-reset.html">修改密码</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="aside">
+        <div class="profile">
+            <img class="avatar" src="../uploads/avatar.jpg">
+            <h3 class="name">布头儿</h3>
+        </div>
+        <ul class="nav">
+            <li>
+                <a href="index.html"><i class="fa fa-dashboard"></i>仪表盘</a>
+            </li>
+            <li>
+                <a href="#menu-posts" class="collapsed" data-toggle="collapse">
+                    <i class="fa fa-thumb-tack"></i>文章<i class="fa fa-angle-right"></i>
+                </a>
+                <ul id="menu-posts" class="collapse">
+                    <li><a href="posts.html">所有文章</a></li>
+                    <li><a href="post-add.html">写文章</a></li>
+                    <li><a href="categories.html">分类目录</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="comments.html"><i class="fa fa-comments"></i>评论</a>
+            </li>
+            <li>
+                <a href="users.html"><i class="fa fa-users"></i>用户</a>
+            </li>
+            <li>
+                <a href="#menu-settings" class="collapsed" data-toggle="collapse">
+                    <i class="fa fa-cogs"></i>设置<i class="fa fa-angle-right"></i>
+                </a>
+                <ul id="menu-settings" class="collapse">
+                    <li><a href="nav-menus.html">导航菜单</a></li>
+                    <li><a href="slides.html">图片轮播</a></li>
+                    <li><a href="settings.html">网站设置</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <script src="../assets/vendors/jquery/jquery.js"></script>
+    <script src="../assets/vendors/bootstrap/js/bootstrap.js"></script>
+    <script>
+        NProgress.done()
+    </script>
+</body>
+<script>
+    // 显示登录用户的信息
+    // 一打开页面发送请求
+    $.get({
+        url: "api/getUserInfo.php",
+        dataType: "json",
+        success: function (obj) {
+            // console.log(obj);
+            $('#icon').attr('src', obj.avatar);
+            $('#nickname').val(obj.nickname);
+            $('#slug').val(obj.slug);
+            $('#bio').html(obj.bio);
+            $('#email').val(obj.email);
+        }
+    })
+
+    // 预览图片
+    //给上传文件一个值改变事件
+    $('#avatar').change(function () {
+        var url = URL.createObjectURL(this.files[0]);
+        $('#icon').attr('src', url);
+    })
+
+
+    // 点击更改,修改个人信息
+    // 点击发送请求
+    //参数是表单的所有带name属性的表单元素的值
+    $('#update').click(function (e) {
+        e=e||window.event;
+        e.preventDefault();//阻止事件默认行为
+        // 因为要上传文件,用FormData异步上传文件
+        var fm=new FormData(document.querySelector('form'));
+        //让jQuery不要有请求头
+        //让jQuery不要将对象解析成字符串
+        $.post({
+            url: "api/updateUser.php",
+            processData:false,
+            contentType:false,
+            data: fm,
+            success:function(obj){
+                if(obj=='ok'){
+                    //如果更新成功,重新加载当前文档
+                    location.reload();
+                    // 更新成功,但是页面上的个人信息显示没有改,这是因为session没有改
+                    //在服务器个人信息更新成功之后修改session
+                   
+                }else{
+                    alert('更新失败!!!');
+                }
+            }
+        })
+
+       
+    })
+   
+</script>
+
+</html>

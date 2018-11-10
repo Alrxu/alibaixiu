@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <input type="file" id="file">
+
+    <img src="" alt="" id="icon">
+</body>
+</html>
+
+<script>
+
+    // 原来的ajax里面，不支持异步上传文件
+    // 所以后面更新了，ajax2.0版本
+    // 让你可以异步上传文件
+    // ajax2.0 其实就是多一个FormData对象
+    // 这个对象就可以让你上传文件了
+    // 用法跟之前发ajax请求的用法几乎一样，只是要多个FormData对象
+
+    document.getElementById('file').onchange = function(){
+
+        //创建请求对象
+        var xhr = new XMLHttpRequest();
+
+        //设置请求行
+        xhr.open('post','file.php');
+
+        //创建一个FormData对象
+        var fm = new FormData();
+        //添加一个提交到服务器的参数
+        fm.append('icon',this.files[0]);
+
+        //如果用了FormData就不用设置请求头了，因为它内部帮我们设置了
+        
+        //用了FormData后，直接传递FormData对象
+        xhr.send(fm);
+
+        xhr.onload = function(){
+
+            // console.log(xhr.responseText);
+
+            document.getElementById('icon').src = xhr.responseText;
+            
+        }
+    }
+</script>

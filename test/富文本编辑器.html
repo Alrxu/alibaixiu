@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 这个div是用来做富文本编辑器的 -->
+    <div id="box"></div>
+    <!-- 导入插件 -->
+    <script src="../assets/vendors/wangEditor/wangEditor.min.js"></script>
+    <script>
+        var editor=new wangEditor('#box');
+        // 调用此方法,div就变成富文本的样式
+         editor.create();
+    </script>
+</body>
+</html>
